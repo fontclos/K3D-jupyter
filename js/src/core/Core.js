@@ -114,22 +114,22 @@ function K3D(provider, targetDOMNode, parameters) {
     world.targetDOMNode.appendChild(world.overlayDOMNode);
 
     this.parameters = _.assign({
-            viewMode: viewModes.view,
-            voxelPaintColor: 0,
-            cameraAutoFit: true,
-            gridAutoFit: true,
-            gridVisible: true,
-            grid: [-1, -1, -1, 1, 1, 1],
-            antialias: true,
-            screenshotScale: 5.0,
-            clearColor: 0xffffff,
-            clippingPlanes: [],
-            fpsMeter: false,
-            lighting: 1.5,
-            time: 0.0,
-            fps: 25.0,
-            guiVersion: require('./../../package.json').version
-        },
+        viewMode: viewModes.view,
+        voxelPaintColor: 0,
+        cameraAutoFit: true,
+        gridAutoFit: true,
+        gridVisible: true,
+        grid: [-1, -1, -1, 1, 1, 1],
+        antialias: true,
+        screenshotScale: 5.0,
+        clearColor: 0xffffff,
+        clippingPlanes: [],
+        fpsMeter: false,
+        lighting: 1.5,
+        time: 0.0,
+        fps: 25.0,
+        guiVersion: require('./../../package.json').version
+    },
         parameters || {}
     );
 
@@ -485,7 +485,7 @@ function K3D(provider, targetDOMNode, parameters) {
             return;
         }
 
-        return loader(self, {objects: [json]}).then(function (objects) {
+        return loader(self, { objects: [json] }).then(function (objects) {
             objects.forEach(function (object) {
                 objectGUIProvider(self, object.json, objects);
                 world.ObjectsListJson[object.json.id] = object.json;
@@ -527,7 +527,7 @@ function K3D(provider, targetDOMNode, parameters) {
      * @returns {String|undefined}
      */
     this.getSnapshot = function () {
-        return pako.deflate(msgpack.encode(_.values(world.ObjectsListJson)), {to: 'string', level: 9});
+        return pako.deflate(msgpack.encode(_.values(world.ObjectsListJson)), { to: 'string', level: 0 });
     };
 
     /**
@@ -537,7 +537,7 @@ function K3D(provider, targetDOMNode, parameters) {
     this.setSnapshot = function (data) {
         var objects = msgpack.decode(pako.inflate(data));
 
-        return self.load({objects: objects});
+        return self.load({ objects: objects });
     };
 
     /**
@@ -585,7 +585,7 @@ function K3D(provider, targetDOMNode, parameters) {
     currentWindow.addEventListener('resize', this.resizeHelper, false);
 
     // load toolbars
-    this.gui = new dat.GUI({width: 220, autoPlace: false, scrollable: true, closeOnTop: true});
+    this.gui = new dat.GUI({ width: 220, autoPlace: false, scrollable: true, closeOnTop: true });
 
     var guiContainer = currentWindow.document.createElement('div');
     guiContainer.className = 'dg';
